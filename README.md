@@ -15,6 +15,8 @@ Crie os seguintes endpoints:
 - <strong>DELETE /users/:id</strong> que deleta um user específico
 - <strong>GET /users/:id</strong> que busca por um user específico e retorna todas as suas informações no modelo de regra de negócio (UserModel)
 
+Ambos devem ser protegidos (requer token).
+
 ### Exercício 2
 
 Crie pelo menos 1 teste unitário para o endpoint implementado DELETE /users/:id.
