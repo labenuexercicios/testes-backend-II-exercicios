@@ -22,3 +22,7 @@ Crie pelo menos 1 teste unitário para o endpoint implementado DELETE /users/:id
 ### Exercício 3
 
 Crie pelo menos 1 teste unitário para o endpoint implementado GET /users/:id.
+
+### Extra
+
+Gere a cobertura dos testes!
