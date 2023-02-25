@@ -19,11 +19,11 @@ Ambos devem ser protegidos (requer token).
 
 ### Exercício 2
 
-Crie pelo menos 1 teste unitário para o endpoint implementado DELETE /users/:id.
+Crie pelo menos 1 teste unitário de sucesso para o endpoint implementado DELETE /users/:id.
 
 ### Exercício 3
 
-Crie pelo menos 1 teste unitário para o endpoint implementado GET /users/:id.
+Crie pelo menos 1 teste unitário de sucesso para o endpoint implementado GET /users/:id.
 
 ### Extra
 
