@@ -12,8 +12,8 @@ Agora você deve implementar um novo endpoint na camada UserBusiness e testar su
 ### Exercício 1
 
 Crie os seguintes endpoints:
-- DELETE /users/:id que deleta um user específico
-- GET /users/:id que busca por um user específico e retorna todas as suas informações no modelo de regra de negócio (UserModel)
+- <strong>DELETE /users/:id</strong> que deleta um user específico
+- <strong>GET /users/:id</strong> que busca por um user específico e retorna todas as suas informações no modelo de regra de negócio (UserModel)
 
 ### Exercício 2
 
