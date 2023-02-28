@@ -32,14 +32,13 @@ export class UserDatabaseMock extends BaseDatabase {
                 return undefined
         }
     }
-
     public getAll = async (): Promise<UserDB[]>  => {
         return [
             {
                 id: "id-mock",
                 name: "Normal Mock",
                 email: "normal@email.com",
-                password: "hash-bananinha",
+                password: "bananinha",
                 created_at: new Date().toISOString(),
                 role: USER_ROLES.NORMAL
             },
@@ -47,10 +46,29 @@ export class UserDatabaseMock extends BaseDatabase {
                 id: "id-mock",
                 name: "Admin Mock",
                 email: "admin@email.com",
-                password: "hash-bananinha",
+                password: "bananinha",
                 created_at: new Date().toISOString(),
                 role: USER_ROLES.ADMIN
             }
         ]
     }
+    public deletedUserById = async(id:string) : Promise<void> => {
+        
+    }
+    public findUserById = async (id:string) : Promise<UserDB | undefined>=>{
+        switch(id){
+            case "id-mock":
+                return {
+                    id: "id-mock",
+                    name: "Normal Mock",
+                    email: "normal@email.com",
+                    password: "bananinha", 
+                    created_at: new Date().toISOString(),
+                    role: USER_ROLES.NORMAL
+    }
+                default:
+                    return undefined
+        }
+    }   
+
 }

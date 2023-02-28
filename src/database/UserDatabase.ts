@@ -26,4 +26,18 @@ export class UserDatabase extends BaseDatabase {
         
         return result
     }
+
+    public async deletedUserById(id:string):Promise<void>{
+        await BaseDatabase
+        .connection(UserDatabase.TABLE_USERS)
+        .delete()
+        .where({id})
+    }
+
+    public async findUserById(id:string){
+        const [userDB]:UserDB[] | undefined[] = await BaseDatabase
+        .connection(UserDatabase.TABLE_USERS)
+        .where({id})
+        return userDB
+    }
 }
