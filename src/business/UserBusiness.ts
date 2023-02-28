@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { GetAllOutputDTO, LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
+import { DeleteUserInputDTO, GetAllOutputDTO, GetUserInputDTO, LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { User } from "../models/User";
@@ -14,7 +14,7 @@ export class UserBusiness {
         private idGenerator: IdGenerator,
         private tokenManager: TokenManager,
         private hashManager: HashManager
-    ) {}
+    ) { }
 
     public signup = async (input: SignupInputDTO): Promise<SignupOutputDTO> => {
         const { name, email, password } = input
@@ -100,11 +100,11 @@ export class UserBusiness {
 
         const isPasswordCorrect = await this.hashManager
             .compare(password, hashedPassword)
-        
+
         if (!isPasswordCorrect) {
             throw new BadRequestError("'password' incorreto")
         }
-        
+
         const payload: TokenPayload = {
             id: user.getId(),
             name: user.getName(),
@@ -138,4 +138,25 @@ export class UserBusiness {
 
         return output
     }
+    public deleteUser = async (input: DeleteUserInputDTO): Promise<void> => {
+        const { id } = input
+        const userDeleteDB = await this.userDatabase.findUserById(id)
+        if (!userDeleteDB) throw new NotFoundError("Id não encontrado")
+
+        await this.userDatabase.deletedUserById(id)
+    }
+
+    public getUserById = async (input: GetUserInputDTO): Promise<UserDB | undefined> => {
+        const { id } = input
+        const user = await this.userDatabase.findUserById(id)
+        if (!user) throw new NotFoundError("Id não encontrado")
+
+        return user
+    }
 }
+
+/*Crie os seguintes endpoints:
+- DELETE /users/:id- que deleta um user específico
+- GET /users/:id- que busca por um user específico e retorna todas as suas informações no modelo de regra de negócio (UserModel)
+
+Ambos devem ser protegidos (requer token).*/

@@ -18,5 +18,10 @@ export interface LoginInputDTO {
 export interface LoginOutputDTO {
     token: string
 }
-
+export interface DeleteUserInputDTO{
+    id: string
+}
+export interface GetUserInputDTO{
+    id:string
+}
 export type GetAllOutputDTO = UserModel[]

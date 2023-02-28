@@ -20,7 +20,7 @@ describe("login", () => {
             id: "id-mock",
             name: "Normal Mock",
             email: "normal@email.com",
-            password: "hash-bananinha",
+            password: "bananinha",
             createdAt: expect.any(String), // valor dinâmico (pode ser qualquer string)
             role: USER_ROLES.NORMAL
         })
