@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { GetAllOutputDTO, LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
+import { GetAllOutputDTO, GetUserByID, LoginInputDTO, LoginOutputDTO, RemoveInputUserDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/UserDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { User } from "../models/User";
@@ -138,4 +138,59 @@ export class UserBusiness {
 
         return output
     }
-}
+
+    public removeUser = async (input: RemoveInputUserDTO) =>{
+        const {id, token} = input
+
+        if(typeof token !== "string"){
+            throw new BadRequestError("'Token' não informado!")
+        }
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if (payload === null){
+            throw new BadRequestError("'Token' inválido!")
+        }
+
+        const findUserToRemove = await this.userDatabase.removeUserById(id)
+        
+            await this.userDatabase.removeUserById(id)
+            const output = {
+                message: "Usuário removido com sucesso!",
+                user: findUserToRemove
+            }
+            return output
+    }
+
+    public getUserByID = async (input: GetUserByID) =>{
+        const {id, token} = input
+
+        if(typeof token !== "string"){
+            throw new BadRequestError("'Token' não informado!")
+        }
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if (payload === null){
+            throw new BadRequestError("'Token' inválido!")
+        }
+
+        const findUserID = await this.userDatabase.getUsersById(id)
+
+        if(!findUserID){
+            throw new NotFoundError("O Usuário não foi encontrado!")
+        }
+        
+            const user = new User(
+                findUserID.id,
+                findUserID.name,
+                findUserID.email,
+                findUserID.password,
+                findUserID.role,
+                findUserID.created_at
+            )
+
+            return user.toBusinessModel()
+        }
+
+    }
