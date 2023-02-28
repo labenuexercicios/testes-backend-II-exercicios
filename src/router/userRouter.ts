@@ -20,3 +20,5 @@ const userController = new UserController(
 userRouter.post("/signup", userController.signup)
 userRouter.post("/login", userController.login)
 userRouter.get("/", userController.getAll)
+userRouter.get("/:id", userController.getUserByID)
+userRouter.get("/:id", userController.removeUser)
