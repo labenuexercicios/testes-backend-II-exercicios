@@ -56,18 +56,27 @@ export class UserDatabaseMock extends BaseDatabase {
         
     }
     public findUserById = async (id:string) : Promise<UserDB | undefined>=>{
-        switch(id){
-            case "id-mock":
+        switch (id) {
+            case "id-mock-normal":
                 return {
-                    id: "id-mock",
+                    id: "id-mock-normal",
                     name: "Normal Mock",
                     email: "normal@email.com",
-                    password: "bananinha", 
+                    password: "hash-bananinha",
                     created_at: new Date().toISOString(),
                     role: USER_ROLES.NORMAL
-    }
-                default:
-                    return undefined
+                }
+            case "id-mock-admin":
+                return {
+                    id: "id-mock-admin",
+                    name: "Admin Mock",
+                    email: "admin@email.com",
+                    password: "hash-bananinha",
+                    created_at: new Date().toISOString(),
+                    role: USER_ROLES.ADMIN
+                }
+            default:
+                return undefined
         }
     }   
 

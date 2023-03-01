@@ -21,4 +21,5 @@ userRouter.post("/signup", userController.signup)
 userRouter.post("/login", userController.login)
 userRouter.get("/", userController.getAll)
 userRouter.delete("/users/:id", userController.deleteUser)
+userRouter.get("/:id", userController.getUserById)
 

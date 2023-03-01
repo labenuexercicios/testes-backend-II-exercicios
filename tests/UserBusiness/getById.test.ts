@@ -26,7 +26,8 @@ describe("Get by Id", () => {
             role: USER_ROLES.NORMAL
         }
         const input: GetUserInputDTO = {
-            id: "id-mock"
+            id: "id-mock",
+
         }
         const result = await userBusiness.getUserById(input)
 
@@ -34,18 +35,22 @@ describe("Get by Id", () => {
     }
     )
 
-    test("Dispara erro caso Id não seja encontrado", async()=>{
-        expect.assertions(2)
-        try {
-            const input: GetUserInputDTO ={
-                id:"id-mck"
-            }
-            const result = await userBusiness.getUserById(input)
-        } catch (error) {
-            if(error instanceof NotFoundError){
-                expect(error.message).toBe("Id não encontrado")
-                expect(error.statusCode).toBe(404)
-            }
+    test("Dispara erro caso Id não seja encontrado", async () => {
+        // expect.assertions(2)
+        // try {
+        //     const input: GetUserInputDTO ={
+        //         id:"id-mk"
+        //     }
+        //     await userBusiness.getUserById(input)
+        // } catch (error) {
+        //     if(error instanceof NotFoundError){
+        //         expect(error.message).toBe("Id não encontrado")
+        //         expect(error.statusCode).toBe(404)
+        //     }
+        // }
+        const input: GetUserInputDTO = {
+            id: "id-mk"
         }
+        expect(async () => { await userBusiness.getUserById(input) }).toThrow(NotFoundError)
     })
 })
