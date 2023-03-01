@@ -159,13 +159,11 @@ export class UserBusiness {
         await this.userDatabase.deletedUserById(id)
     }
 
-    public getUserById = async (input: GetUserInputDTO):Promise<GetUserInputDTO>=> {
+    public getUserById = async (input: GetUserInputDTO): Promise<UserDB | undefined> => {
         const { id } = input
         const user = await this.userDatabase.findUserById(id)
-        if (!user) {
-            throw new NotFoundError("Id não encontrado")
-         }
-         
-        return user 
+        if (!user) throw new NotFoundError("Id não encontrado")
+
+        return user
     }
 }
