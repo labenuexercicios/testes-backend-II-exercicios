@@ -1,5 +1,6 @@
 import { UserBusiness } from "../../src/business/UserBusiness"
 import { SignupInputDTO } from "../../src/dtos/userDTO"
+import { BadRequestError } from "../../src/errors/BadRequestError"
 import { HashManagerMock } from "../mocks/HashManagerMock"
 import { IdGeneratorMock } from "../mocks/IdGeneratorMock"
 import { TokenManagerMock } from "../mocks/TokenManagerMock"
@@ -22,5 +23,77 @@ describe("signup", () => {
 
         const response = await userBusiness.signup(input)
         expect(response.token).toBe("token-mock-normal")
+    })
+
+    test("deve disparar erro se name não for string", async()=>{
+        expect.assertions(2)
+
+        try {
+            const input: SignupInputDTO ={
+                email:"example@email.com",
+                name:null,
+                password:"bananinha"
+            }
+            const result = await userBusiness.signup(input)
+        } catch (error) {
+            if(error instanceof BadRequestError){
+                expect(error.message).toBe("'name' deve ser string")
+                expect(error.statusCode).toBe(400)
+            }
+        }
+
+    })
+    test("deve disparar erro se e-mail não for string", async()=>{
+        expect.assertions(2)
+
+        try {
+            const input: SignupInputDTO ={
+                email:null,
+                name:"Example Mock",
+                password:"bananinha"
+            }
+            const result = await userBusiness.signup(input)
+        } catch (error) {
+            if(error instanceof BadRequestError){
+                expect(error.message).toBe("'email' deve ser string")
+                expect(error.statusCode).toBe(400)
+            }
+        }
+
+    })
+    test("deve disparar erro se password não for string", async()=>{
+        expect.assertions(2)
+
+        try {
+            const input: SignupInputDTO ={
+                email:"normal@email.com",
+                name:"Example Mock",
+                password:null
+            }
+            const result = await userBusiness.signup(input)
+        } catch (error) {
+            if(error instanceof BadRequestError){
+                expect(error.message).toBe("'password' deve ser string")
+                expect(error.statusCode).toBe(400)
+            }
+        }
+
+    })
+
+    test("Deve disparar erro caso e-mail fornecido já tenha sido cadastrado", async()=>{
+              expect.assertions(2)
+
+        const input: SignupInputDTO ={
+            email:"normal@email.com",
+            name:"Example Mock",
+            password:"bananinha"
+        }
+        expect(async()=>{
+            await userBusiness.signup(input)
+        }).rejects.toThrow("'email' já existe")
+
+        expect(async()=>{
+            await userBusiness.signup(input)
+        }).rejects.toBeInstanceOf(BadRequestError)
     })
 })

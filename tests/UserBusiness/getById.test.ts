@@ -1,5 +1,6 @@
 import { UserBusiness } from "../../src/business/UserBusiness"
 import { GetUserInputDTO } from "../../src/dtos/userDTO"
+import { NotFoundError } from "../../src/errors/NotFoundError"
 import { USER_ROLES } from "../../src/types"
 import { HashManagerMock } from "../mocks/HashManagerMock"
 import { IdGeneratorMock } from "../mocks/IdGeneratorMock"
@@ -29,13 +30,22 @@ describe("Get by Id", () => {
         }
         const result = await userBusiness.getUserById(input)
 
-        // expect(result?.id).toBe(valorEsperado.id)
-        // expect(result?.name).toBe(valorEsperado.name)
-        // expect(result?.email).toBe(valorEsperado.email)
-        // expect(result?.password).toBe(valorEsperado.password)
-        // expect(result?.created_at).toBe(valorEsperado.created_at)
-        // expect(result?.role).toBe(valorEsperado.role)
         expect(result).toEqual(valorEsperado)
     }
     )
+
+    test("Dispara erro caso Id não seja encontrado", async()=>{
+        expect.assertions(2)
+        try {
+            const input: GetUserInputDTO ={
+                id:"id-mck"
+            }
+            const result = await userBusiness.getUserById(input)
+        } catch (error) {
+            if(error instanceof NotFoundError){
+                expect(error.message).toBe("Id não encontrado")
+                expect(error.statusCode).toBe(404)
+            }
+        }
+    })
 })
